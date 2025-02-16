@@ -1,0 +1,83 @@
+code
+
+int speedpin1 = 3;
+int speedpin2 = 9;
+int dirpin1 = 5;
+int dirpin2 = 6;
+int dirpin4 = 7;
+int dirpin3 = 8;
+int readpinx = A0;
+int readpiny = A1;
+int readvaluex;
+int readvaluey;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(speedpin1, OUTPUT);
+  pinMode(dirpin1, OUTPUT);
+  pinMode(dirpin2, OUTPUT);
+  pinMode(readpinx, INPUT);
+  pinMode(speedpin2, OUTPUT);
+  pinMode(dirpin4, OUTPUT);
+  pinMode(dirpin3, OUTPUT);
+  pinMode(readpiny, INPUT);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  readvaluex = analogRead(readpinx);
+  readvaluey = analogRead(readpiny);
+  //forword
+  if(readvaluex<400)
+  {
+    analogWrite(speedpin1, map(readvaluex, 0, 400, 255, 60));
+    analogWrite(speedpin2, map(readvaluex, 0, 400, 255, 60));
+    digitalWrite(dirpin1, HIGH);
+    digitalWrite(dirpin2, LOW);
+    digitalWrite(dirpin4, HIGH);
+    digitalWrite(dirpin3, LOW);
+
+  }
+  //backward
+  else if(readvaluex>600)
+  {
+    analogWrite(speedpin1, map(readvaluex, 600, 1023, 60, 255));
+    analogWrite(speedpin2, map(readvaluex, 600, 1023, 60, 255));
+    digitalWrite(dirpin1, LOW);
+    digitalWrite(dirpin2, HIGH);
+    digitalWrite(dirpin4, LOW);
+    digitalWrite(dirpin3, HIGH);
+
+  }
+  //left
+  else if(readvaluey<400)
+  {
+    analogWrite(speedpin1, map(readvaluey, 0, 400, 225, 60));
+    analogWrite(speedpin2, map(readvaluey, 0, 400, 225, 60));
+    digitalWrite(dirpin1, HIGH);
+    digitalWrite(dirpin2, LOW);
+    digitalWrite(dirpin4, LOW);
+    digitalWrite(dirpin3, HIGH);
+
+  }
+  //right
+  else if(readvaluey>600)
+  {
+    analogWrite(speedpin1, map(readvaluey, 600, 1023, 60, 225));
+    analogWrite(speedpin2, map(readvaluey, 600, 1023, 60, 225));
+    digitalWrite(dirpin1, LOW);
+    digitalWrite(dirpin2, HIGH);
+    digitalWrite(dirpin4, HIGH);
+    digitalWrite(dirpin3, LOW);
+
+  }
+  else
+  {
+    digitalWrite(dirpin1, LOW);
+    digitalWrite(dirpin2, LOW);
+    digitalWrite(dirpin3, LOW);
+    digitalWrite(dirpin4, LOW);
+  }
+
+}
